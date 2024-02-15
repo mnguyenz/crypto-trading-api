@@ -20,7 +20,6 @@ export class AverageCalculationService {
     async getAveragegetAverageAllFiat(coin: string): Promise<GetAverageResponse> {
         const symbols = [];
         for (const key in CRYPTO_CODE.FIAT) {
-            console.log(key);
             symbols.push(`${coin}${CRYPTO_CODE.FIAT[key]}`);
         }
         const trades = [];
