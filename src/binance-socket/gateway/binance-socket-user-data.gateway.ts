@@ -7,13 +7,13 @@ export class BinanceSocketUserDataGateway implements OnModuleInit {
 
     onModuleInit() {
         console.log('hooooy');
-        const callbacks = {
-            open: () => console.info('Connected to User Data WebSocket Server'),
-            close: () => console.error('Disconnected from User Data WebSocket Server'),
-            message: (data: string) => console.info(JSON.parse(data))
-        };
+        // const callbacks = {
+        //     open: () => console.info('Connected to User Data WebSocket Server'),
+        //     close: () => console.error('Disconnected from User Data WebSocket Server'),
+        //     message: (data: string) => console.info(JSON.parse(data))
+        // };
 
-        this.client = new WebsocketStream({ callbacks });
-        this.client.userData('9hZXLFBYvBpUgxQ4XsAEVvphDTIkmKW7N6eRYRXizEznUUyiYbg3DKcygi3G');
+        // this.client = new WebsocketStream({ callbacks });
+        // this.client.userData('9hZXLFBYvBpUgxQ4XsAEVvphDTIkmKW7N6eRYRXizEznUUyiYbg3DKcygi3G');
     }
 }

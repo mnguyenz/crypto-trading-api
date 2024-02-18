@@ -9,7 +9,7 @@ const config = {
     username: env.DATABASE.USER,
     password: env.DATABASE.PASSWORD,
     database: env.DATABASE.NAME,
-    entities: [__dirname + './../**/**.entity{.ts,.js}'],
+    entities: [__dirname + './../**/*.entity.{ts,js}'],
     synchronize: true,
     keepConnectionAlive: true,
     autoLoadEntities: true,

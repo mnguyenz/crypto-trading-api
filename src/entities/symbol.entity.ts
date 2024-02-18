@@ -3,7 +3,7 @@ import { CoreEntity } from './core.entity';
 
 @Entity('Symbol')
 export class SymbolEntity extends CoreEntity {
-    @Column()
+    @Column({ unique: true })
     symbol: string;
 
     @Column()
@@ -12,9 +12,12 @@ export class SymbolEntity extends CoreEntity {
     @Column()
     quoteAsset: string;
 
-    @Column()
+    @Column('numeric')
     makerCommission: number;
 
-    @Column()
+    @Column('numeric')
     takerCommission: number;
+
+    @Column({ type: 'boolean', default: true })
+    isTrading: boolean;
 }

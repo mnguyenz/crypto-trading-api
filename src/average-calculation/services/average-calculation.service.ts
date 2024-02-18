@@ -3,7 +3,7 @@ import { GetAverageResponse } from '~average-calculation/responses/get-average.r
 import { BinanceApiMarketService } from '~binance-api/services/binance-api-market.service';
 import { BinanceApiTradeService } from '~binance-api/services/binance-api-trade.service';
 import { BinanceTrade } from '~binance-api/types/binance-trade.type';
-import { CRYPTO_CODE } from '~core/constants/crypto-code.constant';
+import { QUOTE_ASSETS } from '~core/constants/crypto-code.constant';
 
 @Injectable()
 export class AverageCalculationService {
@@ -19,8 +19,8 @@ export class AverageCalculationService {
 
     async getAveragegetAverageAllFiat(coin: string): Promise<GetAverageResponse> {
         const symbols = [];
-        for (const key in CRYPTO_CODE.FIAT) {
-            symbols.push(`${coin}${CRYPTO_CODE.FIAT[key]}`);
+        for (const key in QUOTE_ASSETS.FIAT) {
+            symbols.push(`${coin}${QUOTE_ASSETS.FIAT[key]}`);
         }
         const trades = [];
         for (const symbol of symbols) {
