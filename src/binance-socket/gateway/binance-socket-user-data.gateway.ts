@@ -2,20 +2,18 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { WebsocketStream } from '@binance/connector-typescript';
 
 @Injectable()
-export class BinanceSocketGateway implements OnModuleInit {
+export class BinanceSocketUserDataGateway implements OnModuleInit {
     constructor(private client: WebsocketStream) {}
 
     onModuleInit() {
         console.log('hooooy');
         const callbacks = {
-            open: () => console.debug('Connected to WebSocket server'),
-            close: () => console.debug('Disconnected from WebSocket server'),
+            open: () => console.info('Connected to User Data WebSocket Server'),
+            close: () => console.error('Disconnected from User Data WebSocket Server'),
             message: (data: string) => console.info(JSON.parse(data))
         };
 
         this.client = new WebsocketStream({ callbacks });
-        console.log(this.client);
-        this.client.userData('9hZXLFBYvBpUgxQ4XsAEVvphDTIkmKW7N6eRYRXizEznUUyiYbg3DKbygi3G');
-        // setTimeout(() => this.client.disconnect(), 3000);
+        this.client.userData('9hZXLFBYvBpUgxQ4XsAEVvphDTIkmKW7N6eRYRXizEznUUyiYbg3DKcygi3G');
     }
 }
