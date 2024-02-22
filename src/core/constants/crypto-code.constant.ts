@@ -1,4 +1,4 @@
-export const QUOTE_ASSETS = {
+export const ASSETS = {
     FIAT: {
         USDT: 'USDT',
         FDUSD: 'FDUSD',
@@ -50,4 +50,11 @@ export const QUOTE_ASSETS = {
         DOT: 'DOT',
         SHIB: 'SHIB'
     }
+};
+
+export const SYMBOLS = {
+    MDTUSDT: 'MDTUSDT',
+    IQUSDT: 'IQUSDT',
+    AIUSDT: 'AIUSDT',
+    NFPUSDT: 'NFPUSDT',
 };

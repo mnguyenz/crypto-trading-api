@@ -1,39 +1,49 @@
 import { Injectable } from '@nestjs/common';
-import { env } from '~config/env.config';
-import { SymbolRepository } from '~symbols/repositories/symbol.repository';
-import { Spot } from '@binance/connector-typescript';
+import { SymbolRepository } from '~symbols/symbol.repository';
 import { BinanceSymbol } from '~binance-api/types/binance-symbol.type';
-import { getAssetsFromSymbol } from '~core/utils/string.util';
+import { BINANCE_CLIENT } from '~core/constants/binance.constant';
+import { BinanceFilterType } from '~binance-api/enums/binance-filter-type.enum';
+import { keyBy } from 'lodash';
 
 @Injectable()
 export class BinanceApiWalletService {
     constructor(private symbolRepository: SymbolRepository) {}
 
-    async getTradeFee(): Promise<BinanceSymbol[]> {
-        const client = new Spot(env.BINANCE.API_KEY, env.BINANCE.API_SECRET, { baseURL: env.BINANCE.API_URL });
-
+    async getExchangeInfo(): Promise<BinanceSymbol[]> {
         try {
-            const tradeFees = await client.tradeFee();
-            const tradeFeesData: BinanceSymbol[] = [];
-            for (const tradeFee of tradeFees) {
-                const { baseAsset, quoteAsset } = getAssetsFromSymbol(tradeFee.symbol);
-                tradeFeesData.push({
-                    symbol: tradeFee.symbol,
-                    makerCommission: +tradeFee.makerCommission,
-                    takerCommission: +tradeFee.takerCommission,
+            const [exchangeInformation, tradeFees] = await Promise.all([
+                BINANCE_CLIENT.exchangeInformation(),
+                BINANCE_CLIENT.tradeFee()
+            ]);
+            let { symbols } = exchangeInformation;
+            symbols = symbols.filter((symbol) => symbol.status === 'TRADING');
+            const tradeFeeSymbolMap = keyBy(tradeFees, 'symbol');
+            const symbolData: BinanceSymbol[] = [];
+            for (const sb of symbols) {
+                const { symbol, baseAsset, quoteAsset, filters } = sb;
+                const { tickSize } = filters.find(
+                    (filter) => filter.filterType === BinanceFilterType.PRICE_FILTER
+                ) as any;
+                const { stepSize } = filters.find((filter) => filter.filterType === BinanceFilterType.LOT_SIZE) as any;
+                symbolData.push({
+                    symbol,
                     baseAsset,
-                    quoteAsset
+                    quoteAsset,
+                    priceTickSize: tickSize,
+                    lotStepSize: stepSize,
+                    makerCommission: tradeFeeSymbolMap[symbol].makerCommission,
+                    takerCommission: tradeFeeSymbolMap[symbol].takerCommission
                 });
             }
-            return tradeFeesData;
+            return symbolData;
         } catch (error) {
             return error;
         }
     }
 
-    async getTradeFeeData(): Promise<BinanceSymbol[]> {
-        const tradeFees = await this.getTradeFee();
-        await this.symbolRepository.upsert(tradeFees, ['symbol']);
-        return tradeFees;
+    async getExchangeInfoData(): Promise<BinanceSymbol[]> {
+        const exchangeInfo = await this.getExchangeInfo();
+        await this.symbolRepository.upsert(exchangeInfo, ['symbol']);
+        return exchangeInfo;
     }
 }

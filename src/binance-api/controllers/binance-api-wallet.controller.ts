@@ -8,8 +8,8 @@ import { BinanceSymbol } from '~binance-api/types/binance-symbol.type';
 export class BinanceApiWalletController {
     constructor(private binanceApiMarketService: BinanceApiWalletService) {}
 
-    @Get('get-trade-fee')
-    getTradeFee(): Promise<BinanceSymbol[]> {
-        return this.binanceApiMarketService.getTradeFeeData();
+    @Get('get-exchange-info')
+    getExchangeInfo(): Promise<BinanceSymbol[]> {
+        return this.binanceApiMarketService.getExchangeInfoData();
     }
 }

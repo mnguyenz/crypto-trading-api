@@ -4,4 +4,6 @@ export type BinanceSymbol = {
     quoteAsset: string;
     makerCommission: number;
     takerCommission: number;
+    priceTickSize: number;
+    lotStepSize: number;
 };

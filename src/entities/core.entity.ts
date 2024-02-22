@@ -10,7 +10,7 @@ import { TimestampTransformer } from '~core/timestamp.transformer';
 
 export class CoreEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id: string;
+    id: number;
 
     @CreateDateColumn({ type: 'timestamp', transformer: new TimestampTransformer() })
     createdAt: number;

@@ -3,6 +3,9 @@ import { env } from '~config/env.config';
 import axios from 'axios';
 import { BinanceApiHelperService } from './binance-api-helper.service';
 import { BinanceTrade } from '~binance-api/types/binance-trade.type';
+import { TimeInForce } from '@binance/connector-typescript';
+import { NewOrderParam } from '~binance-api/types/new-order.param';
+import { BINANCE_CLIENT } from '~core/constants/binance.constant';
 
 @Injectable()
 export class BinanceApiTradeService {
@@ -52,6 +55,25 @@ export class BinanceApiTradeService {
                 return [];
             }
             return error;
+        }
+    }
+
+    async newOrder(newOrderParam: NewOrderParam, attempedCount: number): Promise<any> {
+        const { symbol, side, type, price, quantity } = newOrderParam;
+        try {
+            const newOrderResponse = await BINANCE_CLIENT.newOrder(symbol, side, type, {
+                price,
+                quantity,
+                timeInForce: TimeInForce.GTC
+            });
+            return newOrderResponse;
+        } catch (error) {
+            attempedCount += 1;
+            if (attempedCount < 100) {
+                return await this.newOrder(newOrderParam, attempedCount);
+            } else {
+                return error;
+            }
         }
     }
 }

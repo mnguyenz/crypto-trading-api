@@ -5,9 +5,10 @@ import { AverageCalculationModule } from '~average-calculation/average-calculati
 import { BinanceApiModule } from '~binance-api/binance-api.module';
 import { BinanceSocketModule } from '~binance-socket/binance-socket.module';
 import { databaseConfig } from '~config/database.config';
+import { scheduleConfig } from '~config/schedule.config';
 
 @Module({
-    imports: [databaseConfig, BinanceApiModule, AverageCalculationModule, BinanceSocketModule],
+    imports: [databaseConfig, scheduleConfig, BinanceApiModule, AverageCalculationModule, BinanceSocketModule],
     controllers: [AppController],
     providers: [AppService]
 })

@@ -20,4 +20,10 @@ export class SymbolEntity extends CoreEntity {
 
     @Column({ type: 'boolean', default: true })
     isTrading: boolean;
+
+    @Column('numeric')
+    priceTickSize: number;
+
+    @Column('numeric')
+    lotStepSize: number;
 }
