@@ -6,7 +6,7 @@ import {
     UpdateDateColumn,
     VersionColumn
 } from 'typeorm';
-import { TimestampTransformer } from '~core/timestamp.transformer';
+import { TimestampTransformer } from '~core/transforms/timestamp.transformer';
 
 export class CoreEntity extends BaseEntity {
     @PrimaryGeneratedColumn()

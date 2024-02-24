@@ -1,9 +1,9 @@
-import { Column, Entity } from 'typeorm';
-import { CoreEntity } from './core.entity';
+import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
 
 @Entity('Symbol')
-export class SymbolEntity extends CoreEntity {
-    @Column({ unique: true })
+export class SymbolEntity {
+    @PrimaryColumn({ unique: true })
+    @Index()
     symbol: string;
 
     @Column()

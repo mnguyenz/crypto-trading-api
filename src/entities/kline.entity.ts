@@ -1,50 +1,74 @@
-import { Column, Entity, Index, OneToOne } from 'typeorm';
-import { CoreEntity } from './core.entity';
+import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
 import { Interval } from '@binance/connector-typescript';
-import { SymbolEntity } from './symbol.entity';
+import { ColumnNumericTransformer } from '~core/transforms/numeric.transformer';
 
 @Entity('Kline')
-@Index(['symbolId', 'interval', 'closeTime'], { unique: true })
-export class KlineEntity extends CoreEntity {
-    @OneToOne(() => SymbolEntity)
-    symbol: SymbolEntity;
+@Index(['symbol', 'interval', 'closeTime'], { unique: true })
+export class KlineEntity {
+    @PrimaryColumn()
+    symbol: string;
 
-    @Column()
-    symbolId: number;
-
-    @Column({ type: 'enum', enum: Interval })
+    @PrimaryColumn({ type: 'enum', enum: Interval })
     interval: Interval;
 
     @Column({ type: 'bigint' })
     openTime: bigint;
 
-    @Column('numeric')
+    @Column('numeric', {
+        scale: 12,
+        precision: 24,
+        transformer: new ColumnNumericTransformer()
+    })
     openPrice: number;
 
-    @Column('numeric')
+    @Column('numeric', {
+        scale: 12,
+        precision: 24,
+        transformer: new ColumnNumericTransformer()
+    })
     highPrice: number;
 
-    @Column('numeric')
+    @Column('numeric', {
+        scale: 12,
+        precision: 24,
+        transformer: new ColumnNumericTransformer()
+    })
     lowPrice: number;
 
-    @Column('numeric')
+    @Column('numeric', {
+        scale: 12,
+        precision: 24,
+        transformer: new ColumnNumericTransformer()
+    })
     closePrice: number;
 
     @Column('numeric')
     volume: number;
 
-    @Column({ type: 'bigint' })
+    @PrimaryColumn({ type: 'bigint' })
     closeTime: bigint;
 
-    @Column('numeric')
+    @Column('numeric', {
+        scale: 12,
+        precision: 24,
+        transformer: new ColumnNumericTransformer()
+    })
     quoteAssetVolume: number;
 
     @Column()
     numberOfTrades: number;
 
-    @Column('numeric')
+    @Column('numeric', {
+        scale: 12,
+        precision: 24,
+        transformer: new ColumnNumericTransformer()
+    })
     takerBuyBaseAssetVolume: number;
 
-    @Column('numeric')
+    @Column('numeric', {
+        scale: 12,
+        precision: 24,
+        transformer: new ColumnNumericTransformer()
+    })
     takerBuyQuoteAssetVolume: number;
 }

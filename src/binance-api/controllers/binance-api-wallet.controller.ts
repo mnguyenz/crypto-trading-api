@@ -6,10 +6,10 @@ import { BinanceSymbol } from '~binance-api/types/binance-symbol.type';
 @Controller('binance-api/wallet')
 @ApiTags('Binance API Wallet')
 export class BinanceApiWalletController {
-    constructor(private binanceApiMarketService: BinanceApiWalletService) {}
+    constructor(private binanceApiwalletService: BinanceApiWalletService) {}
 
     @Get('get-exchange-info')
     getExchangeInfo(): Promise<BinanceSymbol[]> {
-        return this.binanceApiMarketService.getExchangeInfoData();
+        return this.binanceApiwalletService.getExchangeInfoData();
     }
 }

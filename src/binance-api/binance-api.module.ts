@@ -9,10 +9,11 @@ import { TypeOrmHelperModule } from '~core/modules/typeorm-module.module';
 import { BinanceApiTradeTask } from './tasks/binance-api-trade.task';
 import { KlineRepository } from '~klines/kline.repository';
 import { BinanceApiMarketTask } from './tasks/binance-api-market.task';
+import { BinanceApiMarketController } from './controllers/binance-api-market.controller';
 
 @Module({
     imports: [TypeOrmHelperModule.forCustomRepository([SymbolRepository, KlineRepository])],
-    controllers: [BinanceApiWalletController],
+    controllers: [BinanceApiWalletController, BinanceApiMarketController],
     providers: [
         BinanceApiHelperService,
         BinanceApiTradeService,

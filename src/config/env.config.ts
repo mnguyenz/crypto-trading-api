@@ -15,5 +15,8 @@ export const env = {
         API_URL: process.env.BINANCE_API_URL,
         API_KEY: process.env.BINANCE_API_KEY,
         API_SECRET: process.env.BINANCE_API_SECRET
+    },
+    TELEGRAM: {
+        BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN
     }
 };
