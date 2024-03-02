@@ -1,9 +1,10 @@
-import { OrderType, Side } from '@binance/connector-typescript';
+import { OrderType, Side, TimeInForce } from '@binance/connector-typescript';
 
 export type NewOrderParam = {
     symbol: string;
     side: Side;
     type: OrderType;
     price: number;
-    quantity: number;
+    quantity?: number;
+    timeInForce?: TimeInForce;
 };

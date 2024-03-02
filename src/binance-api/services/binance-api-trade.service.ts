@@ -59,17 +59,20 @@ export class BinanceApiTradeService {
     }
 
     async newOrder(newOrderParam: NewOrderParam, attempedCount: number): Promise<any> {
-        const { symbol, side, type, price, quantity } = newOrderParam;
+        const { symbol, side, type, price, quantity, timeInForce } = newOrderParam;
         try {
             const newOrderResponse = await BINANCE_CLIENT.newOrder(symbol, side, type, {
                 price,
                 quantity,
-                timeInForce: TimeInForce.GTC
+                timeInForce: timeInForce || TimeInForce.GTC
             });
+            console.log('newOrderResponse:', newOrderResponse);
             return newOrderResponse;
         } catch (error) {
+            console.log('error:', error);
+            console.log('attempedCount:', attempedCount);
             attempedCount += 1;
-            if (attempedCount < 100) {
+            if (attempedCount < 1000) {
                 return await this.newOrder(newOrderParam, attempedCount);
             } else {
                 return error;

@@ -57,4 +57,6 @@ export const SYMBOLS = {
     IQUSDT: 'IQUSDT',
     AIUSDT: 'AIUSDT',
     NFPUSDT: 'NFPUSDT',
+    ALTUSDT: 'ALTUSDT',
+    XAIUSDT: 'XAIUSDT'
 };

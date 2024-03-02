@@ -32,7 +32,7 @@ export class AlgorithmAdxMacdService {
         } else {
             trade = adxMacdPreviousTrade;
         }
-        const price = macdInput.values.length - 1;
+        const price = macdInput.values[macdInput.values.length - 1];
         if (adxMacdPreviousTrade !== 1 && trade === 1) {
             console.log('BUY');
             await this.algorithmRepository.update(
